@@ -32,8 +32,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set('strictQuery', true);
-mongoose.connect('mongodb://127.0.0.1:27017/userDB', { useNewUrlParser: true });
 
+
+mongoose.connect("mongodb+srv://"+process.env.DB_USERNAME+":"+process.env.DB_PASSWORD+"@cluster0.bn8mc.mongodb.net/SecretsApp?retryWrites=true&w=majority", { useNewUrlParser: true });
 
 
 const userSchema = new mongoose.Schema({
@@ -176,6 +177,6 @@ app.post("/submit",async(req,res)=>{
 
 
 
-app.listen(3000, function () {
-    console.log("server started at port 3000");
+app.listen(process.env.PORT || 3000, function () {
+    console.log("server started at port 5000");
 })
