@@ -78,21 +78,21 @@ passport.use(new GoogleStrategy({
 ));
 
 
-app.get("/", function (req, res) {
+app.get("https://secrets-app-ly0s.onrender.com/", function (req, res) {
     res.render("home");
 });
 
-app.get('/auth/google',
+app.get('https://secrets-app-ly0s.onrender.com/auth/google',
   passport.authenticate('google', { scope: ['profile'] }));
 
-app.get('/auth/google/secrets', 
+app.get('https://secrets-app-ly0s.onrender.com/auth/google/secrets', 
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect secrets.
     res.redirect('/secrets');
   });
 
-app.get("/secrets",async(req,res)=>{
+app.get("https://secrets-app-ly0s.onrender.com/secrets",async(req,res)=>{
     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stal   e=0, post-check=0, pre-check=0');
    
     if (req.isAuthenticated()){
@@ -106,25 +106,25 @@ app.get("/secrets",async(req,res)=>{
         }
       
     }else{
-        res.redirect("/login");
+        res.redirect("https://secrets-app-ly0s.onrender.com/login");
     }
 
 })
 
-app.get("/register", function (req, res) {
+app.get("https://secrets-app-ly0s.onrender.com/register", function (req, res) {
     res.render("register");
 })
 
-app.post("/register",  (req, res) => {
+app.post("https://secrets-app-ly0s.onrender.com/register",  (req, res) => {
   
     User.register({username:req.body.username},req.body.password,function(err,user){
         if(err){
             console.log(err);
-            res.redirect("/register");
+            res.redirect("https://secrets-app-ly0s.onrender.com/register");
         }else{
             passport.authenticate("local")(req,res,function(){
                
-                res.redirect("/secrets");
+                res.redirect("https://secrets-app-ly0s.onrender.com/secrets");
                 
             });
         }
@@ -134,39 +134,39 @@ app.post("/register",  (req, res) => {
 });
 
 
-app.get("/login", function (req, res) {
+app.get("https://secrets-app-ly0s.onrender.com/login", function (req, res) {
     res.render("login");
 });
 
 
-app.post("/login", passport.authenticate("local"), function(req, res){
-    res.redirect("/secrets");
+app.post("https://secrets-app-ly0s.onrender.com/login", passport.authenticate("local"), function(req, res){
+    res.redirect("https://secrets-app-ly0s.onrender.com/secrets");
 });
 
 
-app.get("/logout",(req,res)=>{
+app.get("https://secrets-app-ly0s.onrender.com/logout",(req,res)=>{
     req.logOut((err)=>{
         if(!err){
-            res.redirect("/");
+            res.redirect("https://secrets-app-ly0s.onrender.com/");
         }
     });
   
     
 })
 
-app.get("/submit",(req,res)=>{
+app.get("https://secrets-app-ly0s.onrender.com/submit",(req,res)=>{
     if (req.isAuthenticated()){
         res.render("submit");
     }else{
-        res.redirect("/login");
+        res.redirect("https://secrets-app-ly0s.onrender.com/login");
     }
    
 })
 
-app.post("/submit",async(req,res)=>{
+app.post("https://secrets-app-ly0s.onrender.com/submit",async(req,res)=>{
     try{
         await User.findByIdAndUpdate(req.user.id, { secret: req.body.secret }); 
-        res.redirect("/secrets");
+        res.redirect("https://secrets-app-ly0s.onrender.com/secrets");
     }
     catch(err){
         console.log(err);
